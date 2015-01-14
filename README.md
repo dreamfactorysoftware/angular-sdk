@@ -4,10 +4,13 @@
 ## Getting Started
  
  Run npm install
+ 
  Run bower install ( i've included the necessary files for now if you dont have node)
  
 Modify the services.js to point to your DSP.
+
 controllers.js has the $scope.buildSDK method. Pass no params for all services, or pass an array of endpoints.
+
 
 ```javascript
         //Build All
