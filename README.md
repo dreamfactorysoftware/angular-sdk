@@ -9,19 +9,23 @@
  
 Modify the services.js to point to your DSP.
 
-controllers.js has the $scope.buildSDK method. Pass no params for all services, or pass an array of endpoints.
+controllers.js has the $scope.buildSDK method. Pass an array of endpoints, and listen for the last one called, or the one you need on init..
 
 
 ```javascript
-        //Build All
-        Swagger.buildSDK();
-        //Build one or more
-        //Swagger.buildSDK(['db', 'system']);
         
-        //Listen for the service you need, if you passed no params, listen for api:system:ready
-        $scope.$on("api:db:ready", function(){
-        console.log("db ready");
+       'use strict';
+
+      angular.module('dfswag.controllers', [])
+        .controller('SwaggerCtrl', ['$scope', 'Swagger', function ($scope, Swagger) {ß
+        Swagger.buildSDK(['db', 'system']);
+        $scope.$on("api:system:ready", function(){
+        $scope.df.db.getRecords({table:'todo'});
         })
+
+
+    }]);
+
 
 
 ```
