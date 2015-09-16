@@ -1,0 +1,7 @@
+{
+	"name":"Address Book for AngularJS",
+	"description":"An address book app for AngularJS showing user registration, user login, and CRUD.",
+	"type": 1,
+	"path": "/add_angular/index.html",
+	"is_active": true
+}
