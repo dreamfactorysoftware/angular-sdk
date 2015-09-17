@@ -32,3 +32,8 @@ md-sidenav.md-closed.md-locked-open-add-active {
 md-dialog form {
 	padding: 10px;
 }
+
+.contact-divider {
+	height: 30px;
+	min-height: 30px;
+}

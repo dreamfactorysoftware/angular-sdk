@@ -1,4 +1,4 @@
-<h3>Contacts</h3>
+<h3 ng-if="!$root.isMobile">Contacts</h3>
 
 
 <table class="table table-hover" ng-if="!$root.isMobile">
@@ -18,20 +18,35 @@
 </table>
 
 <div ng-if="$root.isMobile">
-	 <md-list>
-		<md-list-item class="md-3-line" ng-repeat="item in contacts" ng-click="editContact(item)">
-			<img ng-src="{{ item.image_url || altImage }}" class="md-avatar" onError="this.src='http://uxrepo.com/static/icon-sets/ionicons/png32/128/000000/ios7-contact-128-000000.png'"/>
-			<div class="md-list-item-text">
-			  	<h3>{{ item.first_name + ' ' + item.last_name }}</h3>
-			  	<h4><a ng-href="http://twitter.com/{{ item.twitter }}" ng-show="item.twitter">@{{ item.twitter }}</a></h4>
-			  	<p>{{ item.notes || '' }}</p>
-			</div>
-			<md-divider ></md-divider>
-		</md-list-item>
+
+	<md-input-container>
+      <label>Search</label>
+      <input ng-model="searchText" ng-change="search(searchText)">
+    </md-input-container>
+
+	<md-list>
+	 	<div ng-repeat="item in contacts | filter:searchText">
+	 		<md-toolbar class="md-theme-light contact-divider" ng-if="item.first_name[0] != contacts[$index-1].first_name[0]">
+			    <h2 class="md-toolbar-tools">
+			      	<span>{{ item.first_name[0] }}</span>
+			    </h2>
+		  	</md-toolbar>
+
+			<md-list-item class="md-3-line" ng-click="editContact(item)">
+				<img ng-src="{{ item.image_url || altImage }}" class="md-avatar" onError="this.src='http://uxrepo.com/static/icon-sets/ionicons/png32/128/000000/ios7-contact-128-000000.png'"/>
+				<div class="md-list-item-text">
+				  	<h3>{{ item.first_name + ' ' + item.last_name }}</h3>
+				  	<h4><a ng-href="http://twitter.com/{{ item.twitter }}" ng-show="item.twitter">@{{ item.twitter }}</a></h4>
+				  	<p>{{ item.notes || '' }}</p>
+				</div>
+				<md-divider ></md-divider>
+			</md-list-item>
+		
+		</div>
 	</md-list>
 </div>
 
-<div class="text-center" ng-if="paginate.meta.count > paginate.limit">
+<div class="text-center" ng-if="paginate.meta.count > paginate.limit" ng-show="!$root.isMobile">
 	<md-button 
 		class="md-raised md-primary" 
 		ng-disabled="paginate.page === 0" 
