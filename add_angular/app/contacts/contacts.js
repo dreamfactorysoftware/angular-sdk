@@ -104,28 +104,35 @@ angular.module('contacts', [
 ])
 
 .controller('ContactsCtrl', [
-	'$scope', 'Contacts', '$location', '$route', '$mdToast', 'ContactInfo', '$q',
+	'$scope', 'Contacts', '$location', '$route', '$mdToast', 'ContactInfo', '$q', '$filter',
 
-	function ($scope, Contacts, $location, $route, $mdToast, ContactInfo, $q) {
+	function ($scope, Contacts, $location, $route, $mdToast, ContactInfo, $q, $filter) {
 
 		$scope.colLabels = [ 'ID', 'First Name', 'Last Name', 'Image URL', 'Twitter', 'Skype', 'Notes' ];
 		$scope.colFields = [ 'id', 'first_name', 'last_name', 'image_url', 'twitter', 'skype', 'notes' ];
 		$scope.altImage = 'http://uxrepo.com/static/icon-sets/ionicons/png32/128/000000/ios7-contact-128-000000.png';
 		$scope.mobileActive = null;
 		$scope.paginate = { page: 0, limit: 15 }
+		$scope.contacts = [];
 
-		$scope.loadData = function (page) {
+		$scope.loadData = function (page, options) {
 			$scope.paginate.page = page;
-
-			// Use factory to fetch all contacts, also include count
-			Contacts.query({
+			options = angular.extend({
 				include_count: true,
 				offset: $scope.paginate.page * $scope.paginate.limit,
-				limit: $scope.paginate.limit
-			}).$promise.then(function (result) {
-				$scope.contacts = result.resource;
+				limit: $scope.paginate.limit,
+				order: 'first_name ASC'
+			}, options || {});
+
+			Contacts.query(options).$promise.then(function (result) {
+				if ($scope.$root.isMobile) {
+					$scope.contacts.push.apply($scope.contacts, result.resource);	
+				} else {
+					$scope.contacts = result.resource;	
+				}
+				
 				$scope.paginate.meta = result.meta;
-			});	
+			});
 		};
 
 		$scope.addContact = function () {
@@ -135,6 +142,12 @@ angular.module('contacts', [
 		$scope.editContact = function (contact) {
 			$location.path('/edit-contact/' + contact.id);
 		};
+
+		if ($scope.$root.isMobile) {
+			$scope.$on('SCROLL_END', function () {
+				$scope.loadData($scope.paginate.page+1);
+			});
+		}
 
 		$scope.loadData(0);
 	}
