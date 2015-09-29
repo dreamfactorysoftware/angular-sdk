@@ -6,11 +6,11 @@
                     <div layout layout-sm="column">
                         <md-input-container flex>
                             <label>First name</label>
-                            <input ng-model="contact.first_name">
+                            <input ng-model="contact.first_name" required>
                         </md-input-container>
                         <md-input-container flex>
                             <label>Last Name</label>
-                            <input ng-model="contact.last_name">
+                            <input ng-model="contact.last_name" required>
                         </md-input-container>
                     </div>
                     
@@ -42,7 +42,7 @@
                         </md-checkbox>
                     </div>
 
-                    <md-button type="submit" class="md-raised md-primary">Save</md-button>
+                    <md-button type="submit" class="md-raised md-primary" ng-disabled="contactForm.$invalid">Save</md-button>
                     <md-button type="button" class="md-raised md-warn" ng-click="cancel()">Cancel</md-button>
                     <md-button type="button" class="md-raised md-warn" ng-click="remove()" ng-show="contact.id">Remove</md-button>
                 </form>
