@@ -224,6 +224,10 @@ angular.module('contacts', [
 			})
 		};
 
+		$scope.cancel = function () {
+			$location.path('/contacts');
+		};
+
 
 		$scope.save = function () {
 			if (!contact.id) {
