@@ -160,17 +160,13 @@ angular.module('contacts', [
 		$scope.contact = contact;
 		$scope.groups = groups.resource;
 		$scope.selectedGroups = {};
-		$scope.paginate = { page: 0, limit: 15 }
 
-		$scope.loadData = function (page) {
-			$scope.paginate.page = page;
-
+		$scope.loadData = function () {
 			ContactInfo.query({ 
 				include_count: true,
 				filter: 'contact_id=' + $route.current.params.id 
 			}).$promise.then(function (result) {
 				$scope.contactInfo = result.resource;
-				$scope.paginate.meta = result.meta;
 			});
 		};
 
@@ -188,7 +184,7 @@ angular.module('contacts', [
 			});
 
 			// load contact info
-			$scope.loadData(0);
+			$scope.loadData();
 		}
 
 		$scope.addEditContactInfo = function (ev, item) {
@@ -220,8 +216,8 @@ angular.module('contacts', [
 					id: contact.id
 				}).$promise.then(function () {
 					$location.path('/contacts');
-				})
-			})
+				});
+			});
 		};
 
 		$scope.cancel = function () {
@@ -257,7 +253,7 @@ angular.module('contacts', [
 					$q.all(promises).then(function () {
 						$mdToast.show($mdToast.simple().content('Contact saved!'));
 						$location.path('/contacts');
-					})
+					});
 				});
 			}
 		};
