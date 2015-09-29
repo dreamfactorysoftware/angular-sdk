@@ -60,6 +60,9 @@
             <md-button type="submit" class="md-raised md-primary" ng-disabled="!group.name">
                 Save
             </md-button>
+            <md-button type="button" class="md-raised md-warn" ng-click="removeGroup(group)" ng-show="group.id">
+                Remove
+            </md-button>
             <md-button type="button" ng-click="cancel()" style="margin-right:20px;" class="md-raised md-warn">
                 Cancel
             </md-button>

@@ -141,6 +141,15 @@ angular.module('groups', [
 			$location.path('/edit-contact/' + contact.id);
 		};
 		
+		$scope.removeGroup = function (group) {
+			Groups.remove({
+				filter: 'id=' + group.id
+			}).$promise.then(function () {
+				$scope.cancel();
+				$mdToast.show($mdToast.simple().content('Group removed!'));
+			});
+		};
+
 		$scope.removeContact = function  (contact) {
 			ContactRelationships.remove({
 				filter: 'id=' + contact.relationshipId
