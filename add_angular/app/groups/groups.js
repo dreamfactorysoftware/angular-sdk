@@ -143,8 +143,8 @@ angular.module('groups', [
 		
 		$scope.removeContact = function  (contact) {
 			ContactRelationships.remove({
-				id: contact.relationshipId
-			}).$promise(function () {
+				filter: 'id=' + contact.relationshipId
+			}).$promise.then(function () {
 				$scope.loadContacts();
 				$mdToast.show($mdToast.simple().content('Contact removed from group!'));
 			});
