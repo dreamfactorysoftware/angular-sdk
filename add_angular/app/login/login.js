@@ -19,6 +19,12 @@ angular.module('login', [
 				controller	: 'LoginCtrl',
 				templateUrl	:  'app/login/login.html'
 			})
+
+			.when('/register', {
+				title		: 'Register',
+				controller	: 'RegisterController',
+				templateUrl	:  'app/login/register.html'
+			});
 	}
 ])
 
@@ -67,12 +73,25 @@ angular.module('login', [
 		};
 
 		$scope.register = function () {
+			$location.path('/register');
+		};
+	}
+])
+
+
+.controller('RegisterController', [
+	'$scope', 'LoginHelper', '$location', '$rootScope',
+
+	function ($scope, LoginHelper, $location, $rootScope) {
+		$rootScope.isLoggedIn = false;
+		$scope.register = function () {
 			LoginHelper.register({
 				email: $scope.username,
 				password: $scope.password,
-				first_name: 'Address',
-				last_name: 'Book',
-				name: 'Address Book User'
+				first_name: $scope.firstName || 'Address',
+				last_name: $scope.lastName || 'Book'
+			}).then(function () {
+				$location.path('/login');
 			});
 		};
 	}
