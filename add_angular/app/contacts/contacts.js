@@ -125,14 +125,22 @@ angular.module('contacts', [
 			}, options || {});
 
 			Contacts.query(options).$promise.then(function (result) {
-				if ($scope.$root.isMobile) {
-					$scope.contacts.push.apply($scope.contacts, result.resource);	
-				} else {
+				if (!$scope.$root.isMobile || page === 0) {
 					$scope.contacts = result.resource;	
+				} else {
+					$scope.contacts.push.apply($scope.contacts, result.resource);	
 				}
 				
 				$scope.paginate.meta = result.meta;
 			});
+		};
+
+		$scope.search = function (event) {
+			if (event.keyCode === 13) {
+				$scope.loadData(0, {
+					filter: 'first_name like %' + event.target.value + '%'
+				});
+			}
 		};
 
 		$scope.addContact = function () {
@@ -174,11 +182,10 @@ angular.module('contacts', [
 			Contacts.get({ id: contact.id }).$promise.then(function (response) {
 				$scope.contact = response;
 				ContactRelationships.query({
-					fields: 'id',
 					filter: 'contact_id=' + contact.id
 				}).$promise.then(function (result) {
 					result.resource.forEach(function (item) {
-						$scope.selectedGroups[item.id] = true;
+						$scope.selectedGroups[item.contact_group_id] = true;
 					});
 				});
 			});
