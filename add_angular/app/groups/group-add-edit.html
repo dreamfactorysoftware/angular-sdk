@@ -42,7 +42,7 @@
                 </div>
 
                 <md-list>
-                    <md-list-item class="md-3-line" ng-repeat="item in contacts">
+                    <md-list-item class="md-3-line" ng-repeat="item in contacts | orderBy: 'data.first_name'">
                         <md-button type="button" class="btn-aligned-left" ng-click="removeContact(item)">
                             <i class="fa fa-trash"></i>
                         </md-button>
