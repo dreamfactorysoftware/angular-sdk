@@ -8,6 +8,16 @@ angular.module('login', [
 ])
 
 
+.run([
+	'$rootScope',
+
+	function ($rootScope) {
+		try {
+			$rootScope.user = JSON.parse(window.localStorage.user)
+		} catch (e) {}
+	}
+])
+
 .config([
 
 	'$routeProvider', 
@@ -29,15 +39,22 @@ angular.module('login', [
 ])
 
 .service('LoginHelper', [
-	'$http', '$q', '$cookies',
+	'$http', '$q', '$cookies', '$rootScope',
 
-	function ($http, $q, $cookies) {
+	function ($http, $q, $cookies, $rootScope) {
 		this.initiate = function (options) {
 			var deferred = $q.defer();
 			
 			$http.post('/api/v2/user/session/', options).then(function (result) {
 				$http.defaults.headers.common['X-DreamFactory-Session-Token'] = result.data.session_token;
 				$cookies.session_token = result.data.session_token;
+				
+				$rootScope.user = result.data;
+
+				try {
+					window.localStorage.user = JSON.stringify(result.data);
+				} catch (e) { }
+
  				deferred.resolve();
 			}, deferred.reject);
 
