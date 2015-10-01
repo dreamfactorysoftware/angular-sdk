@@ -93,7 +93,7 @@ angular.module('addressbook', [
       	$scope.logout = function () {
       		$http({
       			method: 'DELETE',
-      			url: '/user/session'
+      			url: '/api/v2/user/session'
       		}).success(function () {
       			$location.path('/login');
       		});
