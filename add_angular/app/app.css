@@ -37,3 +37,8 @@ md-dialog form {
 	height: 30px;
 	min-height: 30px;
 }
+
+.sticky-bottom {
+	position: absolute;
+	bottom: 0px;
+}

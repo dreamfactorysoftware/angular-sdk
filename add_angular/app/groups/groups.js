@@ -66,19 +66,21 @@ angular.module('groups', [
 
 	function ($scope, Groups, $location, $mdDialog, $route) {
 
-		$scope.paginate = { page: 0, limit: 15 }
 
-		$scope.loadData = function (page) {
-			$scope.paginate.page = page;
+		$scope.loadData = function (filter) {
 
 			Groups.query({
 				include_count: true,
-				offset: $scope.paginate.page * $scope.paginate.limit,
-				limit: $scope.paginate.limit
+				filter: filter
 			}).$promise.then(function (result) {
 				$scope.groups = result.resource
-				$scope.paginate.meta = result.meta;
 			});	
+		};
+
+		$scope.search = function (event) {
+			if (event.keyCode === 13) {
+				$scope.loadData('name like %' + event.target.value + '%');
+			}
 		};
 
 		$scope.addEdit = function (ev, item) {
@@ -103,7 +105,7 @@ angular.module('groups', [
 			}
 		};
 
-		$scope.loadData(0);
+		$scope.loadData();
 	}
 ])
 
@@ -139,10 +141,19 @@ angular.module('groups', [
 			$location.path('/edit-contact/' + contact.id);
 		};
 		
+		$scope.removeGroup = function (group) {
+			Groups.remove({
+				filter: 'id=' + group.id
+			}).$promise.then(function () {
+				$scope.cancel();
+				$mdToast.show($mdToast.simple().content('Group removed!'));
+			});
+		};
+
 		$scope.removeContact = function  (contact) {
 			ContactRelationships.remove({
-				id: contact.relationshipId
-			}).$promise(function () {
+				filter: 'id=' + contact.relationshipId
+			}).$promise.then(function () {
 				$scope.loadContacts();
 				$mdToast.show($mdToast.simple().content('Contact removed from group!'));
 			});

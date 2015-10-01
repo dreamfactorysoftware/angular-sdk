@@ -42,7 +42,7 @@
                 </div>
 
                 <md-list>
-                    <md-list-item class="md-3-line" ng-repeat="item in contacts">
+                    <md-list-item class="md-3-line" ng-repeat="item in contacts | orderBy: 'data.first_name'">
                         <md-button type="button" class="btn-aligned-left" ng-click="removeContact(item)">
                             <i class="fa fa-trash"></i>
                         </md-button>
@@ -59,6 +59,9 @@
         <div class="md-actions" layout="row">
             <md-button type="submit" class="md-raised md-primary" ng-disabled="!group.name">
                 Save
+            </md-button>
+            <md-button type="button" class="md-raised md-warn" ng-click="removeGroup(group)" ng-show="group.id">
+                Remove
             </md-button>
             <md-button type="button" ng-click="cancel()" style="margin-right:20px;" class="md-raised md-warn">
                 Cancel

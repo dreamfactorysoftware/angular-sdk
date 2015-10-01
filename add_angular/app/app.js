@@ -12,7 +12,7 @@ angular.module('addressbook', [
 
 ])
 
-.constant('DSP_API_KEY', '6b8254f00acce6fed8ac6d16ea5a8300b32f4123d34d3cfb97e82cdcf85494ab')
+.constant('DSP_API_KEY', 'b6b16dab500f8c9649e365410200a09ad30dc2b3a202f56611d9f6e98f7729c0')
 
 .run([
 	'$cookies', 'DSP_API_KEY', '$http', '$rootScope', '$window',
@@ -58,9 +58,9 @@ angular.module('addressbook', [
 
 // Authentication interceptor. Executes a function everytime before sending any request.
 .factory('httpInterceptor', [
-	'$location',
+	'$location', '$q', '$injector',
 
-	function ($location) {
+	function ($location, $q, $injector) {
 
 		return {
 			responseError: function (result) {
@@ -69,7 +69,11 @@ angular.module('addressbook', [
 				if (result.status === 401) {
 					$location.path('/login');	
 				}
-				return result;
+
+				var $mdToast = $injector.get('$mdToast');
+				$mdToast.show($mdToast.simple().content('Error: ' + result.data.error.message));
+
+				return $q.reject(result);
 			}
 		}
 	}

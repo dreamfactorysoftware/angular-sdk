@@ -42,9 +42,18 @@
 
         <!-- Sidebar -->
         <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left-sidebar">
-            <md-content layout-padding ng-controller="SidebarCtrl">
+            <md-content class="full-height" layout-padding ng-controller="SidebarCtrl">
+                
+                <h5 flex="">
+                    {{ $root.user.first_name + ' ' + $root.user.last_name }}
+                    <br/>
+                    {{ $root.user.email }}
+                </h5>
+
                 <div class="md-list-item-text">
                     <h3>
+                        <md-icon md-font-icon="fa fa-user">
+                        </md-icon>
                         <a class="md-button" href="#/contacts" ng-click="toggleSidebar()">Contacts</a>
                     </h3>
                     <md-divider></md-divider>
@@ -52,11 +61,14 @@
 
                 <div class="md-list-item-text">
                     <h3>
+                        <md-icon md-font-icon="fa fa-group">
+                        </md-icon>
                         <a class="md-button" href="#/groups" ng-click="toggleSidebar()">Groups</a>
                     </h3>
                     <md-divider></md-divider>
                 </div>
 
+                <h5 flex="" class="sticky-bottom">Angular Addressbook v1.0.0</h5>
             </md-content>
         </md-sidenav>
 

@@ -10,7 +10,7 @@
 
         	<div layout="row">
                 <md-input-container flex>
-	                <md-select placeholder="Type" ng-model="contactInfo.info_type">
+	                <md-select placeholder="Type" ng-model="contactInfo.info_type" required>
 			        	<md-option ng-repeat="item in info_types" value="{{ item }}">{{ item }}</md-option>
 			        </md-select>
 			   	</md-input-container>
@@ -19,14 +19,14 @@
             <div layout="row">
                 <md-input-container flex>
                     <label>Phone</label>
-                    <input ng-model="contactInfo.phone" type="tel">
+                    <input ng-model="contactInfo.phone" type="tel" required>
 			   	</md-input-container>
             </div>
 
             <div layout="row">
                 <md-input-container flex>
                     <label>Email</label>
-                    <input ng-model="contactInfo.email" type="email">
+                    <input ng-model="contactInfo.email" type="email" required>
 			   	</md-input-container>
             </div>
 
@@ -40,28 +40,28 @@
             <div layout="row">
                 <md-input-container flex>
                     <label>City</label>
-                    <input ng-model="contactInfo.city">
+                    <input ng-model="contactInfo.city" required>
 			   	</md-input-container>
             </div>
 
             <div layout="row">
                 <md-input-container flex>
                     <label>State</label>
-                    <input ng-model="contactInfo.state">
+                    <input ng-model="contactInfo.state" required>
 			   	</md-input-container>
             </div>
 
             <div layout="row">
                 <md-input-container flex>
                     <label>ZIP</label>
-                    <input ng-model="contactInfo.zip">
+                    <input ng-model="contactInfo.zip" required>
 			   	</md-input-container>
             </div>
 
             <div layout="row">
                 <md-input-container flex>
                     <label>Country</label>
-                    <input ng-model="contactInfo.country">
+                    <input ng-model="contactInfo.country" required>
 			   	</md-input-container>
             </div>
 

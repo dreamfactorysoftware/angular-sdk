@@ -125,14 +125,22 @@ angular.module('contacts', [
 			}, options || {});
 
 			Contacts.query(options).$promise.then(function (result) {
-				if ($scope.$root.isMobile) {
-					$scope.contacts.push.apply($scope.contacts, result.resource);	
-				} else {
+				if (!$scope.$root.isMobile || page === 0) {
 					$scope.contacts = result.resource;	
+				} else {
+					$scope.contacts.push.apply($scope.contacts, result.resource);	
 				}
 				
 				$scope.paginate.meta = result.meta;
 			});
+		};
+
+		$scope.search = function (event) {
+			if (event.keyCode === 13) {
+				$scope.loadData(0, {
+					filter: 'first_name like %' + event.target.value + '%'
+				});
+			}
 		};
 
 		$scope.addContact = function () {
@@ -160,17 +168,13 @@ angular.module('contacts', [
 		$scope.contact = contact;
 		$scope.groups = groups.resource;
 		$scope.selectedGroups = {};
-		$scope.paginate = { page: 0, limit: 15 }
 
-		$scope.loadData = function (page) {
-			$scope.paginate.page = page;
-
+		$scope.loadData = function () {
 			ContactInfo.query({ 
 				include_count: true,
 				filter: 'contact_id=' + $route.current.params.id 
 			}).$promise.then(function (result) {
 				$scope.contactInfo = result.resource;
-				$scope.paginate.meta = result.meta;
 			});
 		};
 
@@ -178,17 +182,16 @@ angular.module('contacts', [
 			Contacts.get({ id: contact.id }).$promise.then(function (response) {
 				$scope.contact = response;
 				ContactRelationships.query({
-					fields: 'id',
 					filter: 'contact_id=' + contact.id
 				}).$promise.then(function (result) {
 					result.resource.forEach(function (item) {
-						$scope.selectedGroups[item.id] = true;
+						$scope.selectedGroups[item.contact_group_id] = true;
 					});
 				});
 			});
 
 			// load contact info
-			$scope.loadData(0);
+			$scope.loadData();
 		}
 
 		$scope.addEditContactInfo = function (ev, item) {
@@ -220,8 +223,12 @@ angular.module('contacts', [
 					id: contact.id
 				}).$promise.then(function () {
 					$location.path('/contacts');
-				})
-			})
+				});
+			});
+		};
+
+		$scope.cancel = function () {
+			$location.path('/contacts');
 		};
 
 
@@ -253,7 +260,7 @@ angular.module('contacts', [
 					$q.all(promises).then(function () {
 						$mdToast.show($mdToast.simple().content('Contact saved!'));
 						$location.path('/contacts');
-					})
+					});
 				});
 			}
 		};

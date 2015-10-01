@@ -58,14 +58,12 @@ angular.module('contact-info', [
 		$scope.paginate = { page: 0, limit: 15 }
 
 		$scope.loadData = function (page) {
-			$scope.paginate.page = page;
-
+			
 			ContactInfo.query({ 
 				include_count: true,
 				filter: 'contact_id=' + $route.current.params.id 
 			}).$promise.then(function (result) {
 				$scope.contactInfo = result.resource;
-				$scope.paginate.meta = result.meta;
 			});
 		};
 

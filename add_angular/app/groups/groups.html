@@ -1,5 +1,9 @@
-<h3>Groups</h3>
+<h3 ng-if="!$root.isMobile">Groups</h3>
 
+<md-input-container>
+  	<label>Search: Type and press enter</label>
+  	<input ng-model="searchText" ng-keyup="search($event)">
+</md-input-container>
 
 <table class="table table-hover" ng-if="groups.length && !$root.isMobile">
 	<thead>
@@ -10,7 +14,7 @@
 	</thead>
 
 	<tbody>
-		<tr ng-repeat="item in groups" ng-click="addEdit(ev, item)">
+		<tr ng-repeat="item in groups | orderBy:'name'" ng-click="addEdit(ev, item)">
 			<td>{{ item.id }}</td>
 			<td>{{ item.name }}</td>
 		</tr>
@@ -19,28 +23,13 @@
 
 <div ng-if="$root.isMobile">
 	 <md-list>
-		<md-list-item class="md-3-line" ng-repeat="item in groups" ng-click="addEdit(ev, item)">
+		<md-list-item class="md-3-line" ng-repeat="item in groups | orderBy:'name'" ng-click="addEdit(ev, item)">
 			<div class="md-list-item-text">
 			  	<h3>{{ item.name }}</h3>
 			</div>
 			<md-divider ></md-divider>
 		</md-list-item>
 	</md-list>
-</div>
-
-<div class="text-center" ng-if="paginate.meta.count > paginate.limit">
-	<md-button 
-		class="md-raised md-primary" 
-		ng-disabled="paginate.page === 0" 
-		ng-click="loadData(paginate.page-1)">
-		Previous
-	</md-button>
-	<md-button 
-		class="md-raised md-primary" 
-		ng-disabled="!paginate.meta.next" 
-		ng-click="loadData(paginate.page+1)">
-		Next
-	</md-button>
 </div>
 
 <md-button class="md-fab btn-material-add" aria-label="Add contact" ng-click="addEdit(ev)">
