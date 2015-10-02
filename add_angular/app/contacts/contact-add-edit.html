@@ -1,0 +1,58 @@
+<md-tabs md-dynamic-height="true">
+    <md-tab label="Detail">
+        <div layout="row">
+            <md-content flex>
+                <form name="contactForm" ng-submit="save()">
+                    <div layout layout-sm="column">
+                        <md-input-container flex>
+                            <label>First name</label>
+                            <input ng-model="contact.first_name" required>
+                        </md-input-container>
+                        <md-input-container flex>
+                            <label>Last Name</label>
+                            <input ng-model="contact.last_name" required>
+                        </md-input-container>
+                    </div>
+                    
+                    <div layout layout-sm="column">
+                        <md-input-container flex>
+                            <label>Twitter</label>
+                            <input ng-model="contact.twitter">
+                        </md-input-container>
+                        <md-input-container flex>
+                            <label>Skype</label>
+                            <input ng-model="contact.skype">
+                        </md-input-container>
+                    </div>
+
+                    <md-input-container flex>
+                        <label>Image URL</label>
+                        <input ng-model="contact.image_url">
+                    </md-input-container>
+
+                    <md-input-container flex>
+                        <label>Notes</label>
+                        <textarea ng-model="contact.notes" columns="1" md-maxlength="150"></textarea>
+                    </md-input-container>
+
+                    <div layout="column" flex ng-show="contact.id">
+                        <label>Groups</label>
+                        <md-checkbox ng-repeat="group in groups" ng-model="selectedGroups[group.id]">
+                            {{ group.name }}
+                        </md-checkbox>
+                    </div>
+
+                    <md-button type="submit" class="md-raised md-primary" ng-disabled="contactForm.$invalid">Save</md-button>
+                    <md-button type="button" class="md-raised md-warn" ng-click="remove()" ng-show="contact.id">Remove</md-button>
+                    <md-button type="button" class="md-raised md-warn" ng-click="cancel()">Cancel</md-button>
+                </form>
+            </md-content>
+        </div>
+    </md-tab>
+
+    <md-tab label="Contact Info" ng-if="contact.id">
+        <div layout="row">
+            <md-content flex ng-include="'app/contact-info/contact-info.html'"></md-content>
+        </div>
+    </md-tab>
+</md-tabs>
