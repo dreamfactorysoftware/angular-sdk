@@ -121,7 +121,7 @@ angular.module('contacts', [
 				include_count: true,
 				offset: $scope.paginate.page * $scope.paginate.limit,
 				limit: $scope.paginate.limit,
-				order: 'first_name ASC'
+				order: 'last_name ASC'
 			}, options || {});
 
 			Contacts.query(options).$promise.then(function (result) {

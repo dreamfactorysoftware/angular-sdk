@@ -26,9 +26,9 @@
 
 	<md-list>
 	 	<div ng-repeat="item in contacts">
-	 		<md-toolbar class="md-theme-light contact-divider" ng-if="item.first_name[0] != contacts[$index-1].first_name[0]">
+	 		<md-toolbar class="md-theme-light contact-divider" ng-if="item.last_name[0] != contacts[$index-1].last_name[0]">
 			    <h2 class="md-toolbar-tools">
-			      	<span>{{ item.first_name[0] }}</span>
+			      	<span>{{ item.last_name[0] }}</span>
 			    </h2>
 		  	</md-toolbar>
 
