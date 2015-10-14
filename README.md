@@ -38,17 +38,19 @@ To download and install DreamFactory, follow the instructions [here](https://git
     - Leave storage service and folder blank. It will use the default local file service named 'files'.
     - Click the Import button. If successful, your app will appear on the Apps tab. You may have to refresh the page to see your new app in the list.
     
-- Make your app files public.
+- Decide if you're going to run the app locally or load it from the instance.
+    - For running locally you clone the repo to your machine and open index.html in the browser. If running locally you need to set the URL for your instance so the app can make the API calls. Go to your local repo and edit app.js. Set the constant INSTANCE_URL to point to your DreamFactory instance such as http://localhost:8080.
+    - For running from the instance you launch the app directly from the Apps tab in the admin console.  Leave INSTANCE_URL set to empty string.
+
+- If running from instance make your app files public.
     - Figure out where your app files are stored. If you used the default storage settings to import the app, it'll be the default local file service named 'files'.
     - Go to the Files tab in the admin console. Find your file service. Double click and find the folder for your app, e.g., 'AddressBookForAngularJS'.
     - Go to the Services tab in the admin console and click the 'files' service. Click the Config tab and add the app folder name 'AddressBookForAngularJS' as a public path. Save your changes.
-    
-- Edit your instance URL
-    - If your browser loads the app from your local machine rather than from your instance you need to set the URL for your instance so the app can make the API calls. Go to the source code and open app.js for editing. Set the constant INSTANCE_URL to point to your DreamFactory instance such as http://localhost:8080. If you are runnig the app from the instance and not locally, you can leave INSTANCE_URL set to empty string.
 
 - Edit your app API key
-    - When you imported the app it created the folder for the app files. Go to AddressBookForAngularJS/add_angular/app and open the file app.js for editing. Replace the API key in that file with the one for your new app. The API key is shown on the app details in the Apps tab of the admin console. In the source code there is a constant named DSP_API_KEY for this.
-
+    - If you are running from instance use the file manager to edit app.js and set APP_API_KEY to the key for your new app. The API key is shown on the app details in the Apps tab of the admin console.
+    - If you are running locally edit app.js in your local repo.
+    
 - Make sure you have a SQL database service named 'db'. Most DreamFactory instances have a default 'db' service for SQLite. You can add one by going to the Services tab in the admin console and creating a new SQL service. Make sure you set the name to 'db'.
 
 #Running the Address Book app
