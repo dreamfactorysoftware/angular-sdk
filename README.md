@@ -55,7 +55,9 @@ To download and install DreamFactory, follow the instructions [here](https://git
 
 #Running the Address Book app
 
-Almost there! You can launch the app from the Apps tab in the admin console. When the app starts up you can register a new user, or log in as an existing user. Currently the app does not support registering and logging in admin users.
+You can launch the app from the Apps tab in the admin console, or by opening your local index.html in your browser.
+
+When the app starts up you can register a new user, or log in as an existing user. Currently the app does not support registering and logging in admin users.
 
 #Example API calls
 
