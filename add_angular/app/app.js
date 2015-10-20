@@ -14,13 +14,13 @@ angular.module('addressbook', [
 
 .constant('INSTANCE_URL', '')
 
-.constant('DSP_API_KEY', 'b6b16dab500f8c9649e365410200a09ad30dc2b3a202f56611d9f6e98f7729c0')
+.constant('APP_API_KEY', 'b6b16dab500f8c9649e365410200a09ad30dc2b3a202f56611d9f6e98f7729c0')
 
 .run([
-	'$cookies', 'DSP_API_KEY', '$http', '$rootScope', '$window',
+	'$cookies', 'APP_API_KEY', '$http', '$rootScope', '$window',
 
-	function ($cookies, DSP_API_KEY, $http, $rootScope, $window) {
-    	$http.defaults.headers.common['X-Dreamfactory-API-Key'] = DSP_API_KEY;
+	function ($cookies, APP_API_KEY, $http, $rootScope, $window) {
+    	$http.defaults.headers.common['X-Dreamfactory-API-Key'] = APP_API_KEY;
 		$http.defaults.headers.common['X-DreamFactory-Session-Token'] = $cookies.session_token;
 		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 			$rootScope.isMobile = true;
@@ -40,9 +40,9 @@ angular.module('addressbook', [
 
 // Config - configure applicaiton routes and settings
 .config([ 
-	'$routeProvider', '$httpProvider', 'DSP_API_KEY', '$mdThemingProvider',
+	'$routeProvider', '$httpProvider', 'APP_API_KEY', '$mdThemingProvider',
 	
-	function ($routeProvider, $httpProvider, DSP_API_KEY, $mdThemingProvider) {
+	function ($routeProvider, $httpProvider, APP_API_KEY, $mdThemingProvider) {
 		$routeProvider
 		    .otherwise({
 		      redirectTo:'/contacts'
