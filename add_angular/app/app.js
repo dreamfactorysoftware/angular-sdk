@@ -12,9 +12,9 @@ angular.module('addressbook', [
 
 ])
 
-.constant('INSTANCE_URL', '')
+.constant('INSTANCE_URL', 'http://dreamfactory:8888')
 
-.constant('APP_API_KEY', 'b6b16dab500f8c9649e365410200a09ad30dc2b3a202f56611d9f6e98f7729c0')
+.constant('APP_API_KEY', '678104aec64b4e8f575ed6789f0214ef99330e6db6334b41d10551efa1864620')
 
 .run([
 	'$cookies', 'APP_API_KEY', '$http', '$rootScope', '$window',
@@ -71,14 +71,21 @@ angular.module('addressbook', [
 				// Append instance url before every api call
 				if (config.url.indexOf('/api/v2') > -1) {
 					config.url = INSTANCE_URL + config.url;
+
+					if (config.method == 'POST' || config.method == 'PUT' || config.method == 'PATCH') {
+						var data;
+						if (Array.isArray(config.data)) {
+							config.data = { resource: config.data };
+						} else {
+							config.data = { resource: [config.data] };
+						}
+					}
 				};
 
 				// delete x-dreamfactory-session-token header if login
 				if (config.method.toLowerCase() === 'post' && config.url.indexOf('/api/v2/user/session') > -1) {
 					delete config.headers['X-DreamFactory-Session-Token'];
 				}
-
-				console.log(config);
 
 				return config;
 			},
