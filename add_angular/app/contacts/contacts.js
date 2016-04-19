@@ -29,7 +29,7 @@ angular.module('contacts', [
 		    	controller 	: 'ContactsItemCtrl',
 		    	resolve		: {
 		    		contact: function () {
-		    			return { id: null };
+		    			return { };
 		    		},
 		    		groups: function (Groups) {
 		    			return	Groups.query().$promise;
@@ -201,7 +201,7 @@ angular.module('contacts', [
 		    	parent: angular.element(document.body),
 		    	targetEvent: ev,
 		    	locals: {
-		    		contactInfo: item || { contact_id: $route.current.params.id, id: '' }
+		    		contactInfo: item || { contact_id: $route.current.params.id }
 		    	}
 			}).then(function () {
 				$scope.loadData();

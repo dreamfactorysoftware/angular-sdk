@@ -135,7 +135,7 @@ angular.module('your-app', [ 'ngResource' ])
     '$resource',
 
     function ($resource) {
-        return $resource('/api/v2/_table/Model', {
+        return $resource('/api/v2/_table/Model', {}, {
             query: {
                 method: 'GET',
                 isArray: false // true if response is an array

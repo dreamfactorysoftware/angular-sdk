@@ -69,13 +69,14 @@ angular.module('contact-info', [
 
 
 		$scope.addEditContactInfo = function (ev, item) {
+			console.log('Contact info')
 			$mdDialog.show({
 		    	controller: 'ContactInfoUpdateCtrl',
 		    	templateUrl: 'app/contact-info/contact-info-add-edit.html',
 		    	parent: angular.element(document.body),
 		    	targetEvent: ev,
 		    	locals: {
-		    		contactInfo: item || { contact_id: $route.current.params.id, id: '' }
+		    		contactInfo: item || { contact_id: $route.current.params.id }
 		    	}
 			}).then(function () {
 				$scope.loadData();
@@ -93,6 +94,9 @@ angular.module('contact-info', [
 	function ($mdScope, $mdDialog, ContactInfo, contactInfo, $mdToast) {
 		$mdScope.contactInfo = angular.copy(contactInfo);
 		$mdScope.info_types = [ 'home', 'work', 'mobile' ];
+		if ($mdScope.contactInfo.id === '') {
+			delete $mdScope.contactInfo;
+		}
 
 		$mdScope.submit = function () {
 			if (!$mdScope.contactInfo.id) {
