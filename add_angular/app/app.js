@@ -12,9 +12,9 @@ angular.module('addressbook', [
 
 ])
 
-.constant('INSTANCE_URL', 'http://dreamfactory:8888')
+.constant('INSTANCE_URL', 'https://dreamfactory:8888')
 
-.constant('APP_API_KEY', '678104aec64b4e8f575ed6789f0214ef99330e6db6334b41d10551efa1864620')
+.constant('APP_API_KEY', '0c7b9f992741c6119c1614557615490080e8187199db589d33d0d35127bcb74a')
 
 .run([
 	'$cookies', 'APP_API_KEY', '$http', '$rootScope', '$window',
@@ -68,11 +68,17 @@ angular.module('addressbook', [
 
 			request: function (config) {
 
+				var ignoreWrapping = false;
+
+				if (config.url.indexOf ('/user/register') > -1 || config.url.indexOf ('/user/session') > -1) {
+					ignoreWrapping = true;
+				}
+
 				// Append instance url before every api call
 				if (config.url.indexOf('/api/v2') > -1) {
 					config.url = INSTANCE_URL + config.url;
 
-					if (config.method == 'POST' || config.method == 'PUT' || config.method == 'PATCH') {
+					if ((config.method == 'POST' || config.method == 'PUT' || config.method == 'PATCH') && !ignoreWrapping) {
 						var data;
 						if (Array.isArray(config.data)) {
 							config.data = { resource: config.data };
