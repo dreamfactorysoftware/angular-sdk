@@ -13,7 +13,7 @@ angular.module('addressbook', [
 ])
 
 // set to empty to launch the app from the admin console apps tab
-app.constant('INSTANCE_URL', '')
+.constant('INSTANCE_URL', '')
 
 // set to your app's API key which can be found on the admin console apps tab
 .constant('APP_API_KEY', '0c7b9f992741c6119c1614557615490080e8187199db589d33d0d35127bcb74a')
